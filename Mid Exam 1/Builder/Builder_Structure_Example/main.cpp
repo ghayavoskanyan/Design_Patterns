@@ -6,11 +6,10 @@
 struct Burger {
     std::string bun;
     std::string patty;
-    std::string sauce;
+    std::string sause;
     std::vector<std::string> toppings;
-
     void show() const {
-        std::cout << bun << " + " << patty << " + " << sauce << '\n';
+        std::cout << bun << "+" << patty << "+" << sause << "\n";
     }
 };
 
@@ -19,21 +18,18 @@ public:
     virtual ~BurgerBuilder() = default;
     virtual void buildBun() = 0;
     virtual void buildPatty() = 0;
-    virtual void buildSauce() = 0;
-    virtual void buildToppings() = 0;
+    virtual void buildSause() = 0;
+    virtual void buildTappings() = 0;
     virtual Burger getResult() = 0;
 };
 
 class CheeseBurgerBuilder : public BurgerBuilder {
 public:
-    void buildBun() override { b.bun = "sesame"; }
+    void buildBun() override { b.bun = "seasame"; }
     void buildPatty() override { b.patty = "beef 150g"; }
-    void buildSauce() override { b.sauce = "secret sauce"; }
-    void buildToppings() override {
-        b.toppings = { "cheddar", "pickles", "onion" };
-    }
+    void buildSause() override { b.sause = "secret sause"; }
+    void buildTappings() override { b.tappings = {"chedder"}; }
     Burger getResult() override { return std::move(b); }
-
 private:
     Burger b;
 };
@@ -42,30 +38,26 @@ class VeggieBurgerBuilder : public BurgerBuilder {
 public:
     void buildBun() override { b.bun = "plain"; }
     void buildPatty() override { b.patty = "veggie"; }
-    void buildSauce() override { b.sauce = "BBQ"; }
-    void buildToppings() override {
-        b.toppings = { "pickles", "onion" };
-    }
+    void buildSause() override { b.sause = "bbq"; }
+    void buildTappings() override { b.tappings = {"lettuce"}; }
     Burger getResult() override { return std::move(b); }
-
 private:
     Burger b;
 };
 
 class Chef {
 public:
-    Burger cook(BurgerBuilder& b) {
+    Burger cook(BurgerBuilder & b) {
         b.buildBun();
         b.buildPatty();
-        b.buildSauce();
-        b.buildToppings();
+        b.buildSause();
+        b.buildTappings();
         return b.getResult();
     }
 };
 
 int main() {
     Chef chef;
-
     CheeseBurgerBuilder cheese;
     Burger a = chef.cook(cheese);
     a.show();
